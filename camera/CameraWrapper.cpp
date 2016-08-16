@@ -35,7 +35,12 @@
 #include <camera/CameraParameters.h>
 
 static android::Mutex gCameraWrapperLock;
-static camera_module_t *gVendorModule = 0;
+
+/*
+ *  *_pointer = 0; means "The address pointed my *_pointer has to be zero.The syntax has to be *_pointer=NULL;
+ *   Possible memory leak
+ */
+static camera_module_t *gVendorModule = NULL;
 
 static char **fixed_set_params = NULL;
 
@@ -44,6 +49,7 @@ static int camera_device_open(const hw_module_t* module, const char* name,
 static int camera_device_close(hw_device_t* device);
 static int camera_get_number_of_cameras(void);
 static int camera_get_camera_info(int camera_id, struct camera_info *info);
+static int get_camera_info(int camera_id, struct camera_info *info);
 static int camera_send_command(struct camera_device * device, int32_t cmd,
                 int32_t arg1, int32_t arg2);
 
@@ -619,6 +625,18 @@ int camera_get_number_of_cameras(void)
 }
 
 int camera_get_camera_info(int camera_id, struct camera_info *info)
+{
+    ALOGV("%s", __FUNCTION__);
+    if (check_vendor_module())
+        return 0;
+    return gVendorModule->get_camera_info(camera_id, info);
+}
+
+/*In some operations seems like we need a function called get_camera_info() as shown to logcat
+ *Using 4 apps ( open camera,google camera,camera360,z camera) AT THE SAME TIME + viber ,didnt crash
+ *Is it fixed now ?
+ */
+int get_camera_info(int camera_id, struct camera_info *info)
 {
     ALOGV("%s", __FUNCTION__);
     if (check_vendor_module())
