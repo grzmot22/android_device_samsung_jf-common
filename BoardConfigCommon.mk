@@ -50,10 +50,8 @@ TARGET_KERNEL_SOURCE := kernel/samsung/jf
 
 # Audio
 BOARD_USES_ALSA_AUDIO := true
-AUDIO_USE_LL_AS_PRIMARY_OUTPUT := true
 USE_CUSTOM_AUDIO_POLICY := 1
 BOARD_HAVE_SAMSUNG_CSDCLIENT := true
-BOARD_HAVE_AUDIENCE_ES325_2MIC := true
 
 # FM
 AUDIO_FEATURE_ENABLED_FM_POWER_OPT := true
@@ -82,11 +80,21 @@ BOARD_CHARGER_SHOW_PERCENTAGE := true
 BOARD_HARDWARE_CLASS += $(COMMON_PATH)/cmhw
 
 # Display
-BOARD_USES_LEGACY_MMAP := true
 NUM_FRAMEBUFFER_SURFACE_BUFFERS := 3
 OVERRIDE_RS_DRIVER := libRSDriver_adreno.so
 TARGET_DISPLAY_USE_RETIRE_FENCE := true
 TARGET_NO_INITLOGO := true
+
+ifeq ($(HOST_OS),linux)
+  ifeq ($(WITH_DEXPREOPT),)
+    WITH_DEXPREOPT := true
+    WITH_DEXPREOPT_PIC := true
+    ifneq ($(TARGET_BUILD_VARIANT),user)
+      # Retain classes.dex in APK's for non-user builds
+      DEX_PREOPT_DEFAULT := nostripping
+    endif
+  endif
+endif
 
 # Fonts
 EXTENDED_FONT_FOOTPRINT := true
@@ -116,6 +124,9 @@ BOARD_FLASH_BLOCK_SIZE := 131072
 
 # Power
 TARGET_POWERHAL_VARIANT := qcom
+
+# Properties (reset them here, include more in device if needed)
+TARGET_SYSTEM_PROP := $(COMMON_PATH)/system.prop
 
 # Recovery
 BOARD_USE_CUSTOM_RECOVERY_FONT := \"roboto_23x41.h\"

@@ -81,12 +81,13 @@ lib/liboemcamera.so
 lib/libsecnativefeature.so
 lib/libvdis.so
 
-# GPU
+# Graphics
 vendor/lib/egl/eglsubAndroid.so
 vendor/lib/egl/libEGL_adreno.so
 vendor/lib/egl/libGLESv1_CM_adreno.so
 vendor/lib/egl/libGLESv2_adreno.so
 vendor/lib/egl/libq3dtools_adreno.so
+vendor/lib/egl/libplayback_adreno.so
 vendor/lib/libadreno_utils.so
 vendor/lib/libbccQTI.so
 vendor/lib/libC2D2.so
@@ -94,19 +95,16 @@ vendor/lib/libc2d30-a3xx.so
 vendor/lib/libc2d30.so
 vendor/lib/libCB.so
 vendor/lib/libgsl.so
-vendor/lib/libllvm-a3xx.so
 vendor/lib/libllvm-qcom.so
-vendor/lib/libOpenCL.so
-vendor/lib/libOpenVG.so
 vendor/lib/libRSDriver_adreno.so
 vendor/lib/librs_adreno.so
 vendor/lib/librs_adreno_sha1.so
 vendor/lib/libsc-a3xx.so
 
-# GPU Firmware
-etc/firmware/a300_pfp.fw:vendor/firmware/a300_pfp.fw
-etc/firmware/a300_pm4.fw:vendor/firmware/a300_pm4.fw
-etc/firmware/vidc_1080p.fw:vendor/firmware/vidc_1080p.fw
+# Graphics firmware
+etc/firmware/a300_pfp.fw
+etc/firmware/a300_pm4.fw
+etc/firmware/vidc_1080p.fw
 
 # GPS
 bin/loc_launcher
@@ -131,14 +129,10 @@ etc/sec_config
 
 # Media
 bin/qseecomd
-lib/libDivxDrm.so
-lib/libdrmdecrypt.so
 lib/libdrmfs.so
 lib/libdrmtime.so
 lib/libI420colorconvert.so
 lib/libmm-color-convertor.so
-lib/libmmosal.so
-lib/libSHIMDivxDrm.so
 lib/libQSEEComAPI.so
 
 # NFC firmware
@@ -167,11 +161,9 @@ etc/wifi/nvram_mfg.txt
 etc/wifi/nvram_net.txt
 
 # Widevine
-lib/drm/libfwdlockengine.so
-lib/liboemcrypto.so
-lib/libwvm.so
+lib/libdrmdecrypt.so
 vendor/lib/drm/libdrmwvmplugin.so
 vendor/lib/libwvdrm_L1.so
+vendor/lib/libwvm.so
 vendor/lib/libWVStreamControlAPI_L1.so
-vendor/lib/mediadrm/libdrmclearkeyplugin.so
 vendor/lib/mediadrm/libwvdrmengine.so
